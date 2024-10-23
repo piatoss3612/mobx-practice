@@ -1,5 +1,6 @@
 "use client";
 
+import useCounter from "@/hooks";
 import { counterV1, counterV2 } from "@/stores/counter";
 import { reaction } from "mobx";
 import { observer } from "mobx-react";
@@ -10,7 +11,8 @@ export default function Home() {
     <div className="flex flex-row gap-4 items-center justify-center min-h-screen py-2">
       <CounterV1 />
       <CounterV2 />
-      <StateCounter />
+      {/* <StateCounter /> */}
+      <CustomHookCounter />
     </div>
   );
 }
@@ -24,10 +26,6 @@ const CounterV1 = observer(() => {
       }
     );
   }, []);
-
-  useEffect(() => {
-    console.log("Computed value updated");
-  }, [counterV1.mul5]);
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 border p-4">
@@ -116,3 +114,31 @@ const StateCounter = () => {
     </div>
   );
 };
+
+const CustomHookCounter = observer(() => {
+  const counter = useCounter();
+
+  useEffect(() => {
+    console.log("Custom Hook Counter updated");
+  }, [counter, counter.counter]);
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-4 border p-4">
+      <h1>Counter</h1>
+      <p>Count: {counter.counter.count}</p>
+      <p>Updated At: {counter.counter.updatedAt.toString()}</p>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={counter.increment}
+      >
+        Increment
+      </button>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={counter.decrement}
+      >
+        Decrement
+      </button>
+    </div>
+  );
+});

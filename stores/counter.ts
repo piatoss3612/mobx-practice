@@ -22,13 +22,6 @@ class CounterV1 {
     this.counter.count--;
     this.counter.updatedAt = new Date();
   }
-
-  get mul5() {
-    return {
-      count: this.counter.count * 5,
-      updatedAt: this.counter.updatedAt,
-    };
-  }
 }
 
 class CounterV2 {
@@ -59,4 +52,4 @@ class CounterV2 {
 const counterV1 = new CounterV1();
 const counterV2 = new CounterV2();
 
-export { counterV1, counterV2 };
+export { counterV1, counterV2, CounterV1, CounterV2 };
